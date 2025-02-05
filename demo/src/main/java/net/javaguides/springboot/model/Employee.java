@@ -34,12 +34,14 @@ public class Employee {
         this.sector = sector;
     }
 
+    /*
     public Employee(String firstName, String lastName, String emailId) {
         super();
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailId = emailId;
     }
+    */
 
     public long getId() {
         return id;
