@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
+import net.javaguides.springboot.model.Sector;
+import net.javaguides.springboot.repository.SectorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,14 +22,20 @@ import net.javaguides.springboot.exception.ResourceNotFoundException;
 import net.javaguides.springboot.model.Employee;
 import net.javaguides.springboot.repository.EmployeeRepository;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000"})
 @RestController
 @RequestMapping("/api/v1")
 public class EmployeeController {
 
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private SectorController sectorController;
+    @Autowired
+    private SectorRepository sectorRepository;
 
     // get all employees
     @GetMapping("/employees")
@@ -38,6 +46,10 @@ public class EmployeeController {
     // create employee rest api
     @PostMapping("/employees")
     public Employee creatEmployee(@RequestBody Employee employee){
+
+        Sector sector = sectorRepository.findById(employee.getSector().getId())
+                .orElseThrow(() -> new RuntimeException("Sector not found"));
+
         return employeeRepository.save(employee);
     }
 
