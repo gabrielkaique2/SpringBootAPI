@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000"})
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/employees")
 public class EmployeeController {
 
     @Autowired
@@ -38,13 +38,13 @@ public class EmployeeController {
     private SectorRepository sectorRepository;
 
     // get all employees
-    @GetMapping("/employees")
+    @GetMapping()
     public List<Employee> getAllEmployees() {
         return employeeRepository.findAll();
     }
 
     // create employee rest api
-    @PostMapping("/employees")
+    @PostMapping()
     public Employee creatEmployee(@RequestBody Employee employee){
 
         Sector sector = sectorRepository.findById(employee.getSector().getId())
@@ -54,7 +54,7 @@ public class EmployeeController {
     }
 
     // get employee by id rest api
-    @GetMapping("/employees/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id));
@@ -63,7 +63,7 @@ public class EmployeeController {
 
     // update employee rest api
 
-    @PutMapping("/employees/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee employeeDetails){
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id));
@@ -79,7 +79,7 @@ public class EmployeeController {
     }
 
     // delete employee rest api
-    @DeleteMapping("/employees/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, Boolean>> deleteEmployee(@PathVariable Long id){
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id));

@@ -54,7 +54,7 @@ public class SectorController {
     }
 
 
-    @PutMapping("/api/v1/sectors/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Sector> updateSector(@PathVariable Long id, @RequestBody Sector
     sectorDetails){
         Sector sector = sectorRepository.findById(id)
